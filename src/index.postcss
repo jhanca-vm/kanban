@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#f4f7fd] text-[#000112] dark:bg-[#20212c] dark:text-white;
+  }
+
+  dialog {
+    @apply dark:bg-[#2b2c37];
+  }
+
+  dialog::backdrop {
+    @apply bg-black/50;
+  }
+}
