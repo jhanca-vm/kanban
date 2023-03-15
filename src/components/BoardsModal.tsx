@@ -1,7 +1,13 @@
 import { useRef } from 'react'
+import { useActiveBoard } from '../hooks/useBoardStore'
+import BoardList from './BoardList'
+import Switch from './Switch'
 
 export default function BoardsModal() {
+  const activeBoard = useActiveBoard()
   const dialog = useRef<HTMLDialogElement>(null)
+
+  if (!activeBoard) return null
 
   return (
     <div className="md:hidden">
@@ -9,7 +15,7 @@ export default function BoardsModal() {
         className="flex items-center gap-x-2 text-lg font-bold"
         onClick={() => dialog.current?.showModal()}
       >
-        Platform Launch
+        {activeBoard.name}
         <img
           className="w-2.5"
           src="/icons/chevron.svg"
@@ -20,10 +26,10 @@ export default function BoardsModal() {
       </button>
       <dialog
         ref={dialog}
-        className="w-[16.5rem] rounded-lg p-0 py-4 font-bold text-[#828fa3]
-          shadow-lg"
+        className="w-[16.5rem] rounded-lg px-0 py-4 shadow-lg"
       >
-        <h2 className="ml-6 text-xs uppercase tracking-[0.2em]">All Boards</h2>
+        <BoardList />
+        <Switch />
       </dialog>
     </div>
   )
