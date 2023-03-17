@@ -21,9 +21,8 @@ export default function BoardList() {
             <li className="mr-6 md:mr-5 lg:mr-6" key={`${name}-${index}`}>
               <button
                 className={
-                  'flex h-12 w-full items-center gap-x-3 rounded-r-full ' +
-                  'px-6 hover:bg-[#635fc7]/10 hover:text-[#635fc7] ' +
-                  `dark:hover:bg-white lg:gap-x-4 lg:px-8${activeStyle(name)}`
+                  'sidebar--btn w-full dark:hover:text-[#828fa3]' +
+                  activeStyle(name)
                 }
                 onClick={() => setActiveBoard(name)}
               >
@@ -32,11 +31,7 @@ export default function BoardList() {
             </li>
           ))}
           <li className="mr-6 md:mr-5 lg:mr-6">
-            <button
-              className="flex h-12 w-full items-center gap-x-3 rounded-r-full
-                px-6 text-[#635fc7] hover:bg-[#635fc7]/10 dark:hover:bg-white
-                lg:gap-x-4 lg:pl-8"
-            >
+            <button className="sidebar--btn w-full text-[#635fc7]">
               <BoardIcon />+ Create New Board
             </button>
           </li>

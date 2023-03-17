@@ -7,11 +7,39 @@
     @apply bg-[#f4f7fd] text-[#000112] dark:bg-[#20212c] dark:text-white;
   }
 
+  main {
+    @apply h-[calc(100vh_-_4rem)] flex-1 auto-cols-[17.5rem] grid-flow-col
+      gap-x-6 overflow-auto px-4 pt-6 pb-16 scrollbar-thin
+      scrollbar-thumb-[#635fc7]/40 scrollbar-thumb-rounded-full
+      hover:scrollbar-thumb-[#635fc7] dark:scrollbar-thumb-[#635fc7]/20
+      md:h-[calc(100vh_-_5rem_-_1px)] md:px-6 lg:h-[calc(100vh_-_6.0625rem)];
+  }
+
+  aside {
+    @apply z-10 -mt-px hidden flex-col justify-between border-r
+      border-[#e4ebfa] bg-white transition-[margin] duration-300
+      dark:border-[#3e3f4e] dark:bg-[#2b2c37] md:flex
+      md:h-[calc(100vh_-_5rem)] md:w-[16.25rem]
+      lg:h-[calc(100vh_-_6.0625rem_+_1px)] lg:w-[18.75rem];
+  }
+
   dialog {
     @apply dark:bg-[#2b2c37];
   }
 
   dialog::backdrop {
     @apply bg-black/50;
+  }
+}
+
+@layer components {
+  .sidebar--btn {
+    @apply flex h-12 items-center gap-x-3 rounded-r-full px-6
+      hover:bg-[#635fc7]/10 hover:text-[#635fc7] lg:gap-x-4 lg:px-8;
+  }
+
+  .sidebar--btn-hide {
+    @apply sidebar--btn mb-8 w-[calc(100%_-_1.25rem)] text-2sm font-bold
+      text-[#828fa3] dark:hover:text-[#828fa3] lg:w-[calc(100%_-_1.5rem)];
   }
 }

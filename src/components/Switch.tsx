@@ -1,19 +1,22 @@
-import type { ChangeEvent } from 'react'
+import { ChangeEvent, useCallback } from 'react'
 import useThemeStore from '../hooks/useThemeStore'
 
 export default function Switch() {
   const theme = useThemeStore(({ theme }) => theme)
   const setTheme = useThemeStore(({ setTheme }) => setTheme)
-
-  function handleChange({ target }: ChangeEvent<HTMLInputElement>) {
-    target.checked ? setTheme('dark') : setTheme('light')
-  }
+  const handleChange = useCallback(
+    ({ target }: ChangeEvent<HTMLInputElement>) => {
+      target.checked ? setTheme('dark') : setTheme('light')
+    },
+    [setTheme]
+  )
 
   return (
     <div
-      className="mx-4 mt-4 flex h-12 items-center justify-center gap-x-6
-        rounded-md bg-[#f4f7fd] dark:bg-[#20212c] md:mx-3 md:mb-2.5 lg:mx-6
-        lg:mb-2"
+      className={
+        'mx-4 mt-4 flex h-12 items-center justify-center gap-x-6 rounded-md ' +
+        'bg-[#f4f7fd] dark:bg-[#20212c] md:mx-3 md:mb-2.5 lg:mx-6 lg:mb-2'
+      }
     >
       <label htmlFor="theme">
         <img
@@ -25,8 +28,10 @@ export default function Switch() {
         />
       </label>
       <label
-        className="h-5 w-10 cursor-pointer items-center rounded-xl bg-[#635fc7]
-          p-[0.1875rem] hover:bg-[#a8a4ff]"
+        className={
+          'h-5 w-10 cursor-pointer items-center rounded-xl bg-[#635fc7] ' +
+          'p-[0.1875rem] hover:bg-[#a8a4ff]'
+        }
         htmlFor="theme"
       >
         <span

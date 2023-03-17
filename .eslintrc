@@ -1,8 +1,15 @@
 {
-  "extends": ["standard", "react-app", "plugin:@typescript-eslint/recommended"],
+  "extends": [
+    "standard",
+    "standard-react",
+    "plugin:react/jsx-runtime",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["jsx-a11y", "@typescript-eslint"],
   "rules": {
-    "space-before-function-paren": "off"
+    "space-before-function-paren": "off",
+    "@typescript-eslint/no-var-requires": "off"
   }
 }

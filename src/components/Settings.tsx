@@ -1,11 +1,10 @@
-import { useRef } from 'react'
+import { useCallback, useRef } from 'react'
 
 export default function Settings() {
   const dialog = useRef<HTMLDialogElement>(null)
-
-  function showHideDialog() {
+  const showHideDialog = useCallback(() => {
     dialog.current?.open ? dialog.current.close() : dialog.current?.show()
-  }
+  }, [])
 
   return (
     <div className="relative flex">
@@ -20,8 +19,10 @@ export default function Settings() {
       </button>
       <dialog
         ref={dialog}
-        className="top-full left-auto mt-5 w-48 rounded-lg p-4 shadow-lg
-          dark:bg-[#20212c] md:mt-6 lg:mt-9"
+        className={
+          'top-full left-auto mt-5 w-48 rounded-lg p-4 shadow-lg ' +
+          'dark:bg-[#20212c] md:mt-6 lg:mt-9'
+        }
       >
         <form
           className="grid gap-y-4 text-sm font-medium leading-6"
