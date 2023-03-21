@@ -1,4 +1,4 @@
-import { useActiveBoard } from '../hooks/useBoardStore'
+import useActiveBoard from '../hooks/useActiveBoard'
 import BoardsModal from './BoardsModal'
 import Settings from './Settings'
 
@@ -8,8 +8,9 @@ export default function Header() {
   return (
     <header
       className={
-        'flex justify-between bg-white px-4 dark:bg-[#2b2c37] md:border-b ' +
-        'md:border-[#ececec] md:px-0 md:dark:border-[#3e3f4e]'
+        'flex h-16 justify-between bg-white px-4 dark:bg-[#2b2c37] ' +
+        'md:h-[5.0625rem] md:border-b md:border-[#ececec] md:px-0 ' +
+        'md:dark:border-[#3e3f4e] lg:h-[6.0625rem]'
       }
     >
       <div
@@ -32,40 +33,40 @@ export default function Header() {
         </figure>
         <BoardsModal />
       </div>
-      <div
-        className={
-          'py-4 md:flex md:flex-1 md:items-center md:justify-between md:px-6 ' +
-          'lg:pt-5 lg:pb-7 lg:pr-8'
-        }
-      >
-        <div className="hidden md:block">
-          {activeBoard && (
+      {activeBoard && (
+        <div
+          className={
+            'py-4 md:flex md:flex-1 md:items-center md:justify-between md:px-6 ' +
+            'lg:pt-5 lg:pb-7 lg:pr-8'
+          }
+        >
+          <div className="hidden md:block">
             <h1 className="text-xl font-bold lg:text-2xl">
               {activeBoard.name}
             </h1>
-          )}
+          </div>
+          <div className="flex items-center gap-x-4 md:gap-x-6">
+            <button
+              className={
+                'grid h-8 w-12 place-items-center rounded-3xl bg-[#635fc7] ' +
+                'opacity-25 hover:opacity-100 md:h-12 md:w-[10.25rem]'
+              }
+            >
+              <img
+                className="w-3 md:hidden"
+                src="/icons/add.svg"
+                alt="Add new task"
+                width={12}
+                height={12}
+              />
+              <span className="hidden text-2sm font-bold text-white md:inline">
+                + Add New Task
+              </span>
+            </button>
+            <Settings />
+          </div>
         </div>
-        <div className="flex items-center gap-x-4 md:gap-x-6">
-          <button
-            className={
-              'grid h-8 w-12 place-items-center rounded-3xl bg-[#635fc7] ' +
-              'opacity-25 hover:opacity-100 md:h-12 md:w-[10.25rem]'
-            }
-          >
-            <img
-              className="w-3 md:hidden"
-              src="/icons/add.svg"
-              alt="Add new task"
-              width={12}
-              height={12}
-            />
-            <span className="hidden text-2sm font-bold text-white md:inline">
-              + Add New Task
-            </span>
-          </button>
-          <Settings />
-        </div>
-      </div>
+      )}
     </header>
   )
 }

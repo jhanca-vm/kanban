@@ -1,28 +1,18 @@
 import uniqolor from 'uniqolor'
-import { useActiveBoard } from '../hooks/useBoardStore'
+import useActiveBoard from '../hooks/useActiveBoard'
+import type { Board } from '../types'
+import CallToAction from './CallToAction'
 
 export default function Tasks() {
-  const activeBoard = useActiveBoard()
-
-  if (!activeBoard) return null
+  const activeBoard = useActiveBoard() as Board
 
   if (activeBoard.columns.length === 0) {
     return (
-      <div
-        className={'flex h-full flex-col items-center justify-center font-bold'}
-      >
-        <p className="mb-6 text-center text-lg text-[#828fa3] lg:mb-8">
-          This board is empty. Create a new column to get started.
-        </p>
-        <button
-          className={
-            'h-12 w-44 rounded-3xl bg-[#635fc7] text-2sm text-white ' +
-            'hover:bg-[#a8a4ff]'
-          }
-        >
-          + Add New Column
-        </button>
-      </div>
+      <CallToAction
+        message="This board is empty. Create a new column to get started."
+        action="+ Add New Column"
+        handleClick={() => undefined}
+      />
     )
   }
 
@@ -67,7 +57,7 @@ export default function Tasks() {
         className={
           'mt-10 rounded-md bg-gradient-to-b from-[#e9effa] ' +
           'to-[#e9effa]/50 text-2xl font-bold text-[#828fa3] ' +
-          'dark:from-[#2b2c37]/25 dark:to-[#2b2c37]/[0.125]'
+          'hover:text-[#635fc7] dark:from-[#2b2c37]/25 dark:to-[#2b2c37]/[0.125]'
         }
       >
         + New Column

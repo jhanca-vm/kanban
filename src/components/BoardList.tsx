@@ -1,7 +1,10 @@
-import useBoardStore, { useActiveBoard } from '../hooks/useBoardStore'
+import { useAddNewBoardRef } from '../context/FormRefsContext'
+import useActiveBoard from '../hooks/useActiveBoard'
+import useBoardStore from '../hooks/useBoardStore'
 import BoardIcon from './icons/Board'
 
 export default function BoardList() {
+  const addNewBoardRef = useAddNewBoardRef()
   const boards = useBoardStore(({ boards }) => boards)
   const activeBoard = useActiveBoard()
   const setActiveBoard = useBoardStore(({ setActiveBoard }) => setActiveBoard)
@@ -31,7 +34,10 @@ export default function BoardList() {
             </li>
           ))}
           <li className="mr-6 md:mr-5 lg:mr-6">
-            <button className="sidebar--btn w-full text-[#635fc7]">
+            <button
+              className="sidebar--btn w-full text-[#635fc7]"
+              onClick={() => addNewBoardRef?.current?.showModal()}
+            >
               <BoardIcon />+ Create New Board
             </button>
           </li>

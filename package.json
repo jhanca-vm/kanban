@@ -1,7 +1,7 @@
 {
   "name": "kanban",
   "private": true,
-  "version": "0.7.0",
+  "version": "0.9.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,15 +13,17 @@
     "@fontsource/plus-jakarta-sans": "^4.5.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.7",
     "uniqolor": "^1.1.0",
     "zustand": "^4.3.6"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
-    "@vitejs/plugin-react-swc": "^3.0.0",
+    "@vitejs/plugin-react-swc": "^3.2.0",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.35.0",
     "eslint-config-standard": "^17.0.0",

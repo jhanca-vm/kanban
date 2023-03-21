@@ -1,15 +1,13 @@
-import { ChangeEvent, useCallback } from 'react'
+import { ChangeEvent } from 'react'
 import useThemeStore from '../hooks/useThemeStore'
 
 export default function Switch() {
   const theme = useThemeStore(({ theme }) => theme)
   const setTheme = useThemeStore(({ setTheme }) => setTheme)
-  const handleChange = useCallback(
-    ({ target }: ChangeEvent<HTMLInputElement>) => {
-      target.checked ? setTheme('dark') : setTheme('light')
-    },
-    [setTheme]
-  )
+
+  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    target.checked ? setTheme('dark') : setTheme('light')
+  }
 
   return (
     <div

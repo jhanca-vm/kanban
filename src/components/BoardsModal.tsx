@@ -1,11 +1,11 @@
 import { useRef } from 'react'
-import { useActiveBoard } from '../hooks/useBoardStore'
+import useActiveBoard from '../hooks/useActiveBoard'
 import BoardList from './BoardList'
 import Switch from './Switch'
 
 export default function BoardsModal() {
   const activeBoard = useActiveBoard()
-  const dialog = useRef<HTMLDialogElement>(null)
+  const dialogRef = useRef<HTMLDialogElement>(null)
 
   if (!activeBoard) return null
 
@@ -13,7 +13,7 @@ export default function BoardsModal() {
     <div className="md:hidden">
       <button
         className="flex items-center gap-x-2 text-lg font-bold"
-        onClick={() => dialog.current?.showModal()}
+        onClick={() => dialogRef.current?.showModal()}
       >
         {activeBoard.name}
         <img
@@ -25,7 +25,7 @@ export default function BoardsModal() {
         />
       </button>
       <dialog
-        ref={dialog}
+        ref={dialogRef}
         className="w-[16.5rem] rounded-lg px-0 py-4 shadow-lg"
       >
         <BoardList />
