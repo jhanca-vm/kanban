@@ -1,4 +1,4 @@
-interface Task {
+export interface Task {
   title: string
   description: string
   status: string
@@ -14,6 +14,18 @@ export interface Board {
     name: string
     tasks: Task[]
   }>
+}
+
+export interface BoardFormInputs {
+  name: string
+  columns: { name: string }[]
+}
+
+export interface TaskFormInputs {
+  title: string
+  description: string
+  status: string
+  subtasks: { title: string }[]
 }
 
 export type Theme = 'light' | 'dark'

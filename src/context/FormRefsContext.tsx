@@ -12,6 +12,8 @@ export function FormRefsProvider({ children }: PropsWithChildren) {
 
   formRefs.set('addNewBoard', useRef(null))
   formRefs.set('editBoard', useRef(null))
+  formRefs.set('task', useRef(null))
+  formRefs.set('editTask', useRef(null))
 
   return (
     <FormRefsContext.Provider value={formRefs}>
@@ -21,5 +23,6 @@ export function FormRefsProvider({ children }: PropsWithChildren) {
 }
 
 export const useAddNewBoardRef = () => useFormRefs().get('addNewBoard')
-
 export const useEditBoardRef = () => useFormRefs().get('editBoard')
+export const useTaskRef = () => useFormRefs().get('task')
+export const useEditTaskRef = () => useFormRefs().get('editTask')

@@ -1,25 +1,20 @@
 import { useEffect } from 'react'
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
+import { useFieldArray, useForm, type SubmitHandler } from 'react-hook-form'
 import { useEditBoardRef } from '../../context/FormRefsContext'
 import useActiveBoard from '../../hooks/useActiveBoard'
+import useBoardFormValidators from '../../hooks/useBoardFormValidators'
 import useBoardStore from '../../hooks/useBoardStore'
-import type { Board } from '../../types'
-import validateName from '../../utils/validateName'
+import type { BoardFormInputs } from '../../types'
+import { required } from '../../utils/constants'
 import Modal from '../Modal'
 import AddInputButton from './AddInputButton'
 import DynamicInput from './DynamicInput'
 import Input from './Input'
 import SubmitButton from './SubmitButton'
 
-interface Inputs {
-  name: string
-  columns: { name: string }[]
-}
-
 export default function EditBoard() {
   const editBoardRef = useEditBoardRef()
-  const boards = useBoardStore(({ boards }) => boards)
-  const activeBoard = useActiveBoard() as Board
+  const activeBoard = useActiveBoard()
   const {
     formState: { errors },
     control,
@@ -27,23 +22,21 @@ export default function EditBoard() {
     handleSubmit,
     getValues,
     reset
-  } = useForm<Inputs>()
+  } = useForm<BoardFormInputs>({ mode: 'all' })
   const { fields, append, remove } = useFieldArray({ control, name: 'columns' })
+  const { validateEditedName, validateColumn } =
+    useBoardFormValidators(getValues)
   const updateBoard = useBoardStore(({ updateBoard }) => updateBoard)
 
-  const validate = (name: string) => {
-    return validateName(
-      name,
-      boards.filter(board => board.name !== activeBoard.name)
-    )
-  }
-
-  const onSubmit: SubmitHandler<Inputs> = ({ name, columns }) => {
-    const index = boards.findIndex(board => board.name === activeBoard.name)
-
-    updateBoard(index, {
-      name,
-      columns: columns.map(({ name }) => ({ name, tasks: [] }))
+  const onSubmit: SubmitHandler<BoardFormInputs> = ({ name, columns }) => {
+    updateBoard(activeBoard!.name, {
+      name: name.trim(),
+      columns: columns.map(({ name }) => ({
+        name: name.trim(),
+        tasks:
+          activeBoard?.columns.find(column => column.name === name.trim())
+            ?.tasks ?? []
+      }))
     })
 
     editBoardRef?.current?.close()
@@ -51,18 +44,18 @@ export default function EditBoard() {
 
   useEffect(() => {
     reset({
-      name: activeBoard.name,
-      columns: activeBoard.columns.map(({ name }) => ({ name }))
+      name: activeBoard?.name,
+      columns: activeBoard?.columns.map(({ name }) => ({ name }))
     })
   }, [activeBoard, reset])
 
   return (
     <Modal ref={editBoardRef} title="Edit Board">
-      <form className="mt-6 grid" onSubmit={handleSubmit(onSubmit)}>
+      <form className="grid" onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Board Name"
           placeholder="e.g. Web Design"
-          {...register('name', { validate, required: 'Can’t be empty' })}
+          {...register('name', { validate: validateEditedName, required })}
           error={errors.name?.message}
         />
         <h3 className="mb-2 mt-6 text-xs text-[#828fa3] dark:text-white">
@@ -71,8 +64,8 @@ export default function EditBoard() {
         {fields.map((column, index) => (
           <DynamicInput
             {...register(`columns.${index}.name`, {
-              validate: name => validateName(name, getValues().columns, true),
-              required: 'Can’t be empty'
+              validate: validateColumn,
+              required
             })}
             error={errors.columns?.[index]?.name?.message}
             key={column.id}

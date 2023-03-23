@@ -3,6 +3,7 @@ import { useEditBoardRef } from '../context/FormRefsContext'
 import useActiveBoard from '../hooks/useActiveBoard'
 import useBoardStore from '../hooks/useBoardStore'
 import type { Board } from '../types'
+import showHideDialog from '../utils/showHideDialog'
 import DeleteModal from './DeleteModal'
 
 export default function Settings() {
@@ -12,12 +13,6 @@ export default function Settings() {
   const { name } = useActiveBoard() as Board
   const deleteBoard = useBoardStore(({ deleteBoard }) => deleteBoard)
 
-  const showHideSettings = () => {
-    settingsRef.current?.open
-      ? settingsRef.current.close()
-      : settingsRef.current?.show()
-  }
-
   const onDelete = () => {
     deleteBoard(name)
     deleteRef.current?.close()
@@ -26,7 +21,7 @@ export default function Settings() {
   return (
     <>
       <div className="relative flex">
-        <button onClick={showHideSettings}>
+        <button onClick={() => showHideDialog(settingsRef)}>
           <img
             className="w-1 md:w-[0.3125rem]"
             src="/icons/ellipsis.svg"

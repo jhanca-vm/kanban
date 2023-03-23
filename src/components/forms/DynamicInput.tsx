@@ -3,6 +3,7 @@ import type { UseFormRegisterReturn } from 'react-hook-form'
 import Input from './Input'
 
 interface Props extends UseFormRegisterReturn {
+  placeholder?: string
   error?: string
   handleClick: () => void
 }

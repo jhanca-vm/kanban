@@ -4,6 +4,7 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     boxShadow: {
+      none: 'none',
       md: '0px 4px 6px rgba(54, 78, 126, 0.101545)',
       lg: '0px 10px 20px rgba(54, 78, 126, 0.25)'
     },

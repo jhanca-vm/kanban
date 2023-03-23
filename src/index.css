@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    @apply scrollbar-thin scrollbar-thumb-[#635fc7]/40
+      scrollbar-thumb-rounded-full hover:scrollbar-thumb-[#635fc7] 
+      dark:scrollbar-thumb-[#635fc7]/20;
+  }
+
   *:focus-visible {
     @apply outline outline-2 outline-current;
   }
@@ -13,10 +19,8 @@
 
   main {
     @apply h-[calc(100vh_-_4rem)] flex-1 auto-cols-[17.5rem] grid-flow-col
-      gap-x-6 overflow-auto px-4 pt-6 pb-16 scrollbar-thin
-      scrollbar-thumb-[#635fc7]/40 scrollbar-thumb-rounded-full
-      hover:scrollbar-thumb-[#635fc7] dark:scrollbar-thumb-[#635fc7]/20
-      md:h-[calc(100vh_-_5rem_-_1px)] md:px-6 lg:h-[calc(100vh_-_6.0625rem)];
+      gap-x-6 overflow-auto px-4 pt-6 pb-16  md:h-[calc(100vh_-_5rem_-_1px)]
+      md:px-6 lg:h-[calc(100vh_-_6.0625rem)];
   }
 
   aside {
@@ -35,15 +39,40 @@
     @apply bg-black/50;
   }
 
+  textarea {
+    @apply h-28 resize-none py-2;
+  }
+
+  textarea,
+  select,
   input[type='text'] {
-    @apply h-10 w-full rounded border-[#828fa3]/25 bg-transparent px-4 text-sm 
-      font-medium placeholder-[#000112]/25 focus:border-[#635fc7]
-      focus:ring-[#635fc7] dark:placeholder-white/25;
+    @apply rounded border-[#828fa3]/25 bg-transparent px-4 text-sm font-medium
+      focus:border-[#635fc7] focus:ring-[#635fc7];
+  }
+
+  textarea,
+  input[type='text'] {
+    @apply w-full placeholder-[#000112]/25 dark:placeholder-white/25;
+  }
+
+  select,
+  input[type='text'] {
+    @apply h-10;
   }
 
   input[aria-invalid='true'] {
     @apply border-[#ea5555] pr-44 ring-[#ea5555] focus:border-[#ea5555]
       focus:ring-[#ea5555];
+  }
+
+  input[type='checkbox'] {
+    @apply h-4 w-4 rounded-sm border-[#828fa3]/25 checked:bg-[#635fc7]
+      focus:ring-0 focus:ring-offset-0 focus:checked:bg-[#635fc7]
+      checked:hover:!bg-[#635fc7];
+  }
+
+  label:has(input:checked) {
+    @apply text-[#000112]/50 line-through dark:text-white/50;
   }
 }
 

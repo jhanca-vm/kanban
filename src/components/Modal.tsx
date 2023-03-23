@@ -17,7 +17,7 @@ const Modal = forwardRef<HTMLDialogElement, Props>(
       }
       onClose={handleClose}
     >
-      <h2 className="text-lg">{title}</h2>
+      <h2 className="mb-6 text-lg leading-6">{title}</h2>
       {children}
     </dialog>
   )

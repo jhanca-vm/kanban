@@ -1,14 +1,15 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Board } from '../types'
+import type { Board, Task } from '../types'
 
 interface Store {
   boards: Board[]
   activeBoard?: Board
   addBoard: (board: Board) => void
   setActiveBoard: (name: string) => void
-  updateBoard: (index: number, board: Board) => void
+  updateBoard: (name: string, board: Board) => void
   deleteBoard: (name: string) => void
+  addTask: (task: Task, boardName: string) => void
 }
 
 const useBoardStore = create<Store>()(
@@ -26,11 +27,12 @@ const useBoardStore = create<Store>()(
           activeBoard: boards.find(board => board.name === name)
         }))
       },
-      updateBoard(index, board) {
+      updateBoard(name, board) {
         set(({ boards }) => {
+          const index = boards.findIndex(board => board.name === name)
           const newState = [...boards]
 
-          newState.splice(index, 1, board)
+          newState[index] = board
 
           return { boards: newState, activeBoard: board }
         })
@@ -40,6 +42,19 @@ const useBoardStore = create<Store>()(
           const boards = state.boards.filter(board => board.name !== name)
 
           return { boards, activeBoard: boards[0] }
+        })
+      },
+      addTask(task, boardName) {
+        set(state => {
+          const boards = [...state.boards]
+          const boardIndex = boards.findIndex(({ name }) => name === boardName)
+          const columnIndex = boards[boardIndex].columns.findIndex(
+            ({ name }) => name === task.status
+          )
+
+          boards[boardIndex].columns[columnIndex].tasks.push(task)
+
+          return { boards }
         })
       }
     }),

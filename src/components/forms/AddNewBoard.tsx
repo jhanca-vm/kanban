@@ -1,21 +1,17 @@
 import { useFieldArray, useForm, type SubmitHandler } from 'react-hook-form'
 import { useAddNewBoardRef } from '../../context/FormRefsContext'
+import useBoardFormValidators from '../../hooks/useBoardFormValidators'
 import useBoardStore from '../../hooks/useBoardStore'
-import validateName from '../../utils/validateName'
+import type { BoardFormInputs } from '../../types'
+import { required } from '../../utils/constants'
 import Modal from '../Modal'
 import AddInputButton from './AddInputButton'
 import DynamicInput from './DynamicInput'
 import Input from './Input'
 import SubmitButton from './SubmitButton'
 
-interface Inputs {
-  name: string
-  columns: { name: string }[]
-}
-
 export default function AddNewBoard() {
   const addNewBoardRef = useAddNewBoardRef()
-  const boards = useBoardStore(({ boards }) => boards)
   const {
     formState: { errors },
     control,
@@ -23,14 +19,15 @@ export default function AddNewBoard() {
     handleSubmit,
     getValues,
     reset
-  } = useForm<Inputs>()
+  } = useForm<BoardFormInputs>({ mode: 'all' })
   const { fields, append, remove } = useFieldArray({ control, name: 'columns' })
+  const { validateName, validateColumn } = useBoardFormValidators(getValues)
   const addBoard = useBoardStore(({ addBoard }) => addBoard)
 
-  const onSubmit: SubmitHandler<Inputs> = ({ name, columns }) => {
+  const onSubmit: SubmitHandler<BoardFormInputs> = ({ name, columns }) => {
     addBoard({
-      name,
-      columns: columns.map(({ name }) => ({ name, tasks: [] }))
+      name: name.trim(),
+      columns: columns.map(({ name }) => ({ name: name.trim(), tasks: [] }))
     })
 
     addNewBoardRef?.current?.close()
@@ -42,14 +39,11 @@ export default function AddNewBoard() {
       title="Add New Board"
       handleClose={() => reset({ name: '', columns: [] })}
     >
-      <form className="mt-6 grid" onSubmit={handleSubmit(onSubmit)}>
+      <form className="grid" onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Board Name"
           placeholder="e.g. Web Design"
-          {...register('name', {
-            validate: name => validateName(name, boards),
-            required: 'Can’t be empty'
-          })}
+          {...register('name', { validate: validateName, required })}
           error={errors.name?.message}
         />
         <h3 className="mb-2 mt-6 text-xs text-[#828fa3] dark:text-white">
@@ -58,8 +52,8 @@ export default function AddNewBoard() {
         {fields.map((column, index) => (
           <DynamicInput
             {...register(`columns.${index}.name`, {
-              validate: name => validateName(name, getValues().columns, true),
-              required: 'Can’t be empty'
+              validate: validateColumn,
+              required
             })}
             error={errors.columns?.[index]?.name?.message}
             key={column.id}

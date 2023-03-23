@@ -3,7 +3,7 @@ import AddNewBoard from './components/forms/AddNewBoard'
 import EditBoard from './components/forms/EditBoard'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
-import Tasks from './components/Tasks'
+import Tasks from './components/tasks/Tasks'
 import { useAddNewBoardRef } from './context/FormRefsContext'
 import useActiveBoard from './hooks/useActiveBoard'
 import useBoardStore from './hooks/useBoardStore'
@@ -32,7 +32,7 @@ export default function App() {
         </main>
       </div>
       <AddNewBoard />
-      <EditBoard />
+      {activeBoard && <EditBoard />}
     </>
   )
 }

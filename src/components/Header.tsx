@@ -1,5 +1,6 @@
 import useActiveBoard from '../hooks/useActiveBoard'
 import BoardsModal from './BoardsModal'
+import AddNewTask from './forms/AddNewTask'
 import Settings from './Settings'
 
 export default function Header() {
@@ -46,23 +47,7 @@ export default function Header() {
             </h1>
           </div>
           <div className="flex items-center gap-x-4 md:gap-x-6">
-            <button
-              className={
-                'grid h-8 w-12 place-items-center rounded-3xl bg-[#635fc7] ' +
-                'opacity-25 hover:opacity-100 md:h-12 md:w-[10.25rem]'
-              }
-            >
-              <img
-                className="w-3 md:hidden"
-                src="/icons/add.svg"
-                alt="Add new task"
-                width={12}
-                height={12}
-              />
-              <span className="hidden text-2sm font-bold text-white md:inline">
-                + Add New Task
-              </span>
-            </button>
+            {activeBoard.columns.length > 0 && <AddNewTask />}
             <Settings />
           </div>
         </div>
